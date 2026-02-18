@@ -1,0 +1,464 @@
+// SalesFunnelSearch.module.scss
+// Professional, data-rich design for a sales funnel context
+
+$primary: #0f4c81;
+$primaryLight: #e8f0f9;
+$accent: #e8a020;
+$accentLight: #fef6e7;
+$border: #e1dfdd;
+$borderMid: #c8c6c4;
+$textPrimary: #201f1e;
+$textSecondary: #605e5c;
+$textMuted: #a19f9d;
+$surface: #ffffff;
+$surfaceAlt: #faf9f8;
+$shadowSm: 0 1px 4px rgba(0,0,0,0.08);
+$shadowMd: 0 3px 12px rgba(0,0,0,0.10);
+$radius: 6px;
+
+// ─── Status Colors ─────────────────────────────────────────────────────────────
+
+:global(.statusWon)       { background: #dff6dd !important; color: #107c10 !important; }
+:global(.statusLost)      { background: #fde7e9 !important; color: #a4262c !important; }
+:global(.statusPending)   { background: #fff4ce !important; color: #835c00 !important; }
+:global(.statusCancelled) { background: #f3f2f1 !important; color: #605e5c !important; }
+:global(.statusDefault)   { background: #e8f0f9 !important; color: #0f4c81 !important; }
+
+.statusWon       { background: #dff6dd; color: #107c10; }
+.statusLost      { background: #fde7e9; color: #a4262c; }
+.statusPending   { background: #fff4ce; color: #835c00; }
+.statusCancelled { background: #f3f2f1; color: #605e5c; }
+.statusDefault   { background: #e8f0f9; color: #0f4c81; }
+
+// ─── List Badge Colors ─────────────────────────────────────────────────────────
+
+.badgeAggregate { background: #0f4c81; color: white; }
+.badge2026      { background: #8764b8; color: white; }
+.badge2025      { background: #038387; color: white; }
+.badge2024      { background: #e8a020; color: white; }
+.badge2023      { background: #498205; color: white; }
+.badge2022      { background: #c43501; color: white; }
+.badge2021      { background: #00b7c3; color: white; }
+.badge2020      { background: #605e5c; color: white; }
+.badgeDefault   { background: $primary; color: white; }
+
+// ─── Container ────────────────────────────────────────────────────────────────
+
+.container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 900px;
+  color: $textPrimary;
+  padding: 4px 0;
+}
+
+.webPartTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: $primary;
+  margin: 0 0 16px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid $primaryLight;
+}
+
+// ─── Search Bar ────────────────────────────────────────────────────────────────
+
+.searchBarWrapper {
+  margin-bottom: 4px;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background: $surface;
+  border: 1.5px solid $borderMid;
+  border-radius: $radius;
+  padding: 0 8px 0 14px;
+  gap: 8px;
+  box-shadow: $shadowSm;
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:focus-within {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.12);
+  }
+}
+
+.searchIcon {
+  color: $textMuted;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: $textPrimary;
+  height: 46px;
+  padding: 0;
+  min-width: 0;
+
+  &::placeholder { color: $textMuted; }
+}
+
+.clearBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: $textMuted;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background 0.1s, color 0.1s;
+
+  &:hover { background: $border; color: $textPrimary; }
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: $border;
+  flex-shrink: 0;
+}
+
+.fieldSelect {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: $textSecondary;
+  cursor: pointer;
+  padding: 0 4px;
+  height: 46px;
+  flex-shrink: 0;
+  max-width: 130px;
+
+  &:focus { color: $primary; }
+}
+
+.searchBtn {
+  background: $primary;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+
+  &:hover:not(:disabled) { background: #0a3660; }
+  &:disabled { background: #c8c6c4; cursor: not-allowed; }
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ─── Tabs ──────────────────────────────────────────────────────────────────────
+
+.tabsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 14px 0 8px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $border;
+}
+
+.tab {
+  background: $surfaceAlt;
+  border: 1px solid $border;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: $textSecondary;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.12s;
+
+  &:hover {
+    background: $primaryLight;
+    border-color: $primary;
+    color: $primary;
+  }
+}
+
+.tabActive {
+  background: $primary !important;
+  border-color: $primary !important;
+  color: white !important;
+
+  .tabCount {
+    background: rgba(255,255,255,0.25) !important;
+    color: white !important;
+  }
+}
+
+.tabCount {
+  background: $border;
+  color: $textSecondary;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
+// ─── Results ──────────────────────────────────────────────────────────────────
+
+.resultsList {
+  margin-top: 4px;
+}
+
+.resultCount {
+  font-size: 12px;
+  color: $textMuted;
+  margin: 0 0 10px 2px;
+
+  strong { color: $textSecondary; }
+}
+
+// ─── Card ─────────────────────────────────────────────────────────────────────
+
+.card {
+  display: block;
+  position: relative;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $radius;
+  padding: 14px 40px 14px 16px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s, box-shadow 0.12s, transform 0.12s;
+
+  &:hover {
+    border-color: $primary;
+    box-shadow: $shadowMd;
+    transform: translateY(-1px);
+    text-decoration: none;
+
+    .cardTitle { color: $primary; }
+    .cardArrow { opacity: 1; transform: translateY(-50%) translateX(2px); }
+  }
+}
+
+.cardHeader {
+  margin-bottom: 10px;
+}
+
+.cardTitleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: $textPrimary;
+  flex: 1;
+  min-width: 0;
+  transition: color 0.12s;
+  line-height: 1.3;
+}
+
+.statusBadge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.cardSubRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.listBadge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.bid2winId {
+  font-size: 11px;
+  color: $textMuted;
+  font-family: monospace;
+}
+
+// ─── Card Grid ────────────────────────────────────────────────────────────────
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px 16px;
+  padding: 10px 0;
+  border-top: 1px solid #f3f2f1;
+  border-bottom: 1px solid #f3f2f1;
+  margin-bottom: 10px;
+}
+
+.cardField {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fieldLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: $textMuted;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.fieldValue {
+  font-size: 13px;
+  color: $textPrimary;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ─── Card Footer ──────────────────────────────────────────────────────────────
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.valueLabel {
+  font-size: 11px;
+  color: $textMuted;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.valueAmount {
+  font-size: 16px;
+  font-weight: 700;
+  color: $primary;
+}
+
+.cardArrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: $textMuted;
+  opacity: 0;
+  transition: opacity 0.12s, transform 0.12s;
+}
+
+// ─── States ───────────────────────────────────────────────────────────────────
+
+.stateArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px;
+  color: $textSecondary;
+  font-size: 14px;
+  text-align: center;
+
+  p { margin: 8px 0 0; }
+}
+
+.stateIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.errorState { color: #a4262c; }
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 52px 24px;
+  text-align: center;
+  color: $textMuted;
+}
+
+.emptyIcon {
+  color: #e1dfdd;
+  margin-bottom: 16px;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: $textSecondary;
+  margin: 0 0 8px;
+}
+
+.emptySubtitle {
+  font-size: 13px;
+  color: $textMuted;
+  margin: 0;
+  max-width: 380px;
+}
+
+// ─── Loading Dots ─────────────────────────────────────────────────────────────
+
+.loadingDots {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+
+  span {
+    width: 9px;
+    height: 9px;
+    background: $primary;
+    border-radius: 50%;
+    animation: bounce 1.2s infinite ease-in-out;
+
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+  }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
