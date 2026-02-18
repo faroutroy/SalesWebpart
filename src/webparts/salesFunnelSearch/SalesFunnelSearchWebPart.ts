@@ -13,6 +13,7 @@ import { ISalesFunnelSearchProps } from './components/ISalesFunnelSearchProps';
 export interface ISalesFunnelSearchWebPartProps {
   title: string;
   placeholder: string;
+  siteUrl: string;
 }
 
 export default class SalesFunnelSearchWebPart extends BaseClientSideWebPart<ISalesFunnelSearchWebPartProps> {
@@ -24,6 +25,7 @@ export default class SalesFunnelSearchWebPart extends BaseClientSideWebPart<ISal
         context: this.context,
         title: this.properties.title || 'Sales Funnel Search',
         placeholder: this.properties.placeholder || 'Search by project, owner, city, estimator...',
+        siteUrl: this.properties.siteUrl || this.context.pageContext.web.absoluteUrl,
       }
     );
     ReactDom.render(element, this.domElement);
@@ -53,6 +55,11 @@ export default class SalesFunnelSearchWebPart extends BaseClientSideWebPart<ISal
                 PropertyPaneTextField('placeholder', {
                   label: 'Search Input Placeholder',
                   placeholder: 'Search by project, owner, city...',
+                }),
+                PropertyPaneTextField('siteUrl', {
+                  label: 'SharePoint Site URL',
+                  placeholder: 'https://your-tenant.sharepoint.com/sites/SalesFunnel',
+                  description: 'The SharePoint site that contains the Sales Funnel lists',
                 }),
               ],
             },
