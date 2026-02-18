@@ -8,7 +8,7 @@ export class SalesFunnelSearchService {
 
   constructor(context: WebPartContext) {
     this.context = context;
-    this.siteUrl = context.pageContext.web.absoluteUrl;
+    this.siteUrl = 'https://martinmarietta.sharepoint.com/sites/RMAsphaltSalesFunnel';
   }
 
   /**
