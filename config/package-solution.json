@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "sales-funnel-search-client-side-solution",
+    "id": "d3e4f5a6-b7c8-9012-defg-345678901bcd",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true
+  },
+  "paths": {
+    "zippedPackage": "solution/sales-funnel-search.sppkg"
+  }
+}
