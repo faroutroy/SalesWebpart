@@ -34,14 +34,20 @@ export interface ISearchState {
 }
 
 export const SALES_FUNNEL_LISTS = [
-  'Aggregate Sales Funnel',
-  '2026',
-  '2025',
-  '2024',
-  '2023',
-  '2022',
-  '2021',
-  '2020',
+  'Sales Funnel Data',
+  '2013 Data',
+  '2014 Data',
+  '2015 Data',
+  '2016 Data',
+  '2017 Data',
+  '2018 Data',
+  '2019 Data',
+  '2020 Data',
+  '2021 Data',
+  '2022 Data',
+  '2023 Data',
+  '2024 Data',
+  '2025 Data',
 ];
 
 export const SEARCH_FIELDS = [
