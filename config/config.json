@@ -1,0 +1,19 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core-build/webpack-config/2.0/webpack-config.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "sales-funnel-search-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/salesFunnelSearch/SalesFunnelSearchWebPart.js",
+          "manifest": "./src/webparts/salesFunnelSearch/SalesFunnelSearchWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "react": "node_modules/react/umd/react.production.min.js",
+    "react-dom": "node_modules/react-dom/umd/react-dom.production.min.js"
+  },
+  "localizedResources": {}
+}
