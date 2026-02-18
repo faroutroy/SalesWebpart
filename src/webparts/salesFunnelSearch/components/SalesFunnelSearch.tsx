@@ -22,8 +22,6 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
     };
   }
 
-  // ─── Handlers ──────────────────────────────────────────────────────────────
-
   private handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const query = e.target.value;
     this.setState({ query });
@@ -59,8 +57,6 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
     this.setState({ activeList: list });
   };
 
-  // ─── Search ─────────────────────────────────────────────────────────────────
-
   private async executeSearch(query: string): Promise<void> {
     if (!query || query.trim().length < 2) return;
     this.setState({ isLoading: true, errorMessage: undefined, hasSearched: true });
@@ -75,8 +71,6 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
       });
     }
   }
-
-  // ─── Helpers ─────────────────────────────────────────────────────────────────
 
   private getFilteredResults(): ISalesFunnelItem[] {
     const { results, activeList } = this.state;
@@ -117,8 +111,6 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
     };
     return colors[listName] || styles.badgeDefault;
   }
-
-  // ─── Render Helpers ──────────────────────────────────────────────────────────
 
   private renderSearchBar(): JSX.Element {
     const { query, isLoading, searchField } = this.state;
@@ -173,7 +165,6 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
   private renderListTabs(): JSX.Element {
     const { activeList } = this.state;
     const listsWithResults = SALES_FUNNEL_LISTS.filter(l => this.getCountForList(l) > 0);
-
     return (
       <div className={styles.tabsWrapper}>
         <button
@@ -199,19 +190,16 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
 
   private renderResultCard(item: ISalesFunnelItem): JSX.Element {
     return (
-      <a
+      
         key={`${item.sourceList}-${item.Id}`}
         href={item.itemUrl}
         target="_blank"
         rel="noopener noreferrer"
         className={styles.card}
       >
-        {/* Card Header */}
         <div className={styles.cardHeader}>
           <div className={styles.cardTitleRow}>
-            <span className={styles.cardTitle}>
-              {item.Project || item.Title || '(No Title)'}
-            </span>
+            <span className={styles.cardTitle}>{item.Project || item.Title || '(No Title)'}</span>
             {item.Status && (
               <span className={`${styles.statusBadge} ${this.getStatusColor(item.Status)}`}>
                 {item.Status}
@@ -222,85 +210,24 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
             <span className={`${styles.listBadge} ${this.getListBadgeColor(item.sourceList)}`}>
               {item.sourceList}
             </span>
-            {item.Bid2WinID && (
-              <span className={styles.bid2winId}>ID: {item.Bid2WinID}</span>
-            )}
+            {item.Bid2WinID && <span className={styles.bid2winId}>ID: {item.Bid2WinID}</span>}
           </div>
         </div>
 
-        {/* Card Body - Key Fields Grid */}
         <div className={styles.cardGrid}>
-          {item.Owner && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Owner</span>
-              <span className={styles.fieldValue}>{item.Owner}</span>
-            </div>
-          )}
-          {item.Estimator && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Estimator</span>
-              <span className={styles.fieldValue}>{item.Estimator}</span>
-            </div>
-          )}
-          {item.BusinessArea && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Business Area</span>
-              <span className={styles.fieldValue}>{item.BusinessArea}</span>
-            </div>
-          )}
-          {item.Segment && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Segment</span>
-              <span className={styles.fieldValue}>{item.Segment}</span>
-            </div>
-          )}
-          {(item.City || item.State) && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Location</span>
-              <span className={styles.fieldValue}>
-                {[item.City, item.County, item.State].filter(Boolean).join(', ')}
-              </span>
-            </div>
-          )}
-          {item.BidDate && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Bid Date</span>
-              <span className={styles.fieldValue}>{item.BidDate}</span>
-            </div>
-          )}
-          {item.AwardDate && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Award Date</span>
-              <span className={styles.fieldValue}>{item.AwardDate}</span>
-            </div>
-          )}
-          {item.PrimeOrSub && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Prime/Sub</span>
-              <span className={styles.fieldValue}>{item.PrimeOrSub}</span>
-            </div>
-          )}
-          {item.Plant && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Plant</span>
-              <span className={styles.fieldValue}>{item.Plant}</span>
-            </div>
-          )}
-          {item.LowBidderName && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>Low Bidder</span>
-              <span className={styles.fieldValue}>{item.LowBidderName}</span>
-            </div>
-          )}
-          {item.PISStatus && (
-            <div className={styles.cardField}>
-              <span className={styles.fieldLabel}>PIS Status</span>
-              <span className={styles.fieldValue}>{item.PISStatus}</span>
-            </div>
-          )}
+          {item.Owner && <div className={styles.cardField}><span className={styles.fieldLabel}>Owner</span><span className={styles.fieldValue}>{item.Owner}</span></div>}
+          {item.Estimator && <div className={styles.cardField}><span className={styles.fieldLabel}>Estimator</span><span className={styles.fieldValue}>{item.Estimator}</span></div>}
+          {item.BusinessArea && <div className={styles.cardField}><span className={styles.fieldLabel}>Business Area</span><span className={styles.fieldValue}>{item.BusinessArea}</span></div>}
+          {item.Segment && <div className={styles.cardField}><span className={styles.fieldLabel}>Segment</span><span className={styles.fieldValue}>{item.Segment}</span></div>}
+          {(item.City || item.State) && <div className={styles.cardField}><span className={styles.fieldLabel}>Location</span><span className={styles.fieldValue}>{[item.City, item.County, item.State].filter(Boolean).join(', ')}</span></div>}
+          {item.BidDate && <div className={styles.cardField}><span className={styles.fieldLabel}>Bid Date</span><span className={styles.fieldValue}>{item.BidDate}</span></div>}
+          {item.AwardDate && <div className={styles.cardField}><span className={styles.fieldLabel}>Award Date</span><span className={styles.fieldValue}>{item.AwardDate}</span></div>}
+          {item.PrimeOrSub && <div className={styles.cardField}><span className={styles.fieldLabel}>Prime/Sub</span><span className={styles.fieldValue}>{item.PrimeOrSub}</span></div>}
+          {item.Plant && <div className={styles.cardField}><span className={styles.fieldLabel}>Plant</span><span className={styles.fieldValue}>{item.Plant}</span></div>}
+          {item.LowBidderName && <div className={styles.cardField}><span className={styles.fieldLabel}>Low Bidder</span><span className={styles.fieldValue}>{item.LowBidderName}</span></div>}
+          {item.PISStatus && <div className={styles.cardField}><span className={styles.fieldLabel}>PIS Status</span><span className={styles.fieldValue}>{item.PISStatus}</span></div>}
         </div>
 
-        {/* Card Footer - Estimated Value */}
         {item.EstimatedValue && item.EstimatedValue > 0 ? (
           <div className={styles.cardFooter}>
             <span className={styles.valueLabel}>Estimated Value</span>
@@ -329,7 +256,6 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
         </div>
       );
     }
-
     if (errorMessage) {
       return (
         <div className={`${styles.stateArea} ${styles.errorState}`}>
@@ -338,7 +264,6 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
         </div>
       );
     }
-
     if (!hasSearched) {
       return (
         <div className={styles.emptyState}>
@@ -348,13 +273,10 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
             </svg>
           </div>
           <p className={styles.emptyTitle}>Search the Sales Funnel</p>
-          <p className={styles.emptySubtitle}>
-            Search across {SALES_FUNNEL_LISTS.length} lists — by project name, owner, city, estimator, status, and more
-          </p>
+          <p className={styles.emptySubtitle}>Search across {SALES_FUNNEL_LISTS.length} lists — by project, owner, city, estimator, status and more</p>
         </div>
       );
     }
-
     if (filtered.length === 0) {
       return (
         <div className={styles.emptyState}>
@@ -375,8 +297,6 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
       </div>
     );
   }
-
-  // ─── Main Render ─────────────────────────────────────────────────────────────
 
   public render(): JSX.Element {
     const { hasSearched, results } = this.state;
