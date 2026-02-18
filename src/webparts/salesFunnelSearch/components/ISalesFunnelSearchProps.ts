@@ -4,4 +4,5 @@ export interface ISalesFunnelSearchProps {
   context: WebPartContext;
   title: string;
   placeholder: string;
+  siteUrl: string;
 }
