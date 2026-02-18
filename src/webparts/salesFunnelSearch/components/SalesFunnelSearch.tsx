@@ -10,7 +10,7 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
 
   constructor(props: ISalesFunnelSearchProps) {
     super(props);
-    this.searchService = new SalesFunnelSearchService(props.context);
+    this.searchService = new SalesFunnelSearchService(props.context,props.siteUrl);
     this.state = {
       query: '',
       results: [],
