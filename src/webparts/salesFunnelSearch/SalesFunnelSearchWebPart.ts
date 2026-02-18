@@ -1,23 +1,64 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/core-build/entry-point/2.0/entry-point.schema.json",
-  "id": "c2d3e4f5-a6b7-8901-cdef-234567890abc",
-  "alias": "SalesFunnelSearchWebPart",
-  "componentType": "WebPart",
-  "version": "*",
-  "manifestVersion": 2,
-  "requiresCustomScript": false,
-  "supportedHosts": ["SharePointWebPart"],
-  "preconfiguredEntries": [
-    {
-      "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
-      "group": { "default": "Other" },
-      "title": { "default": "Sales Funnel Search" },
-      "description": { "default": "Search across all Sales Funnel lists by project, owner, city, estimator and more" },
-      "officeFabricIconFontName": "Search",
-      "properties": {
-        "title": "Sales Funnel Search",
-        "placeholder": "Search by project, owner, city, estimator..."
+import * as React from 'react';
+import * as ReactDom from 'react-dom';
+import { Version } from '@microsoft/sp-core-library';
+import {
+  IPropertyPaneConfiguration,
+  PropertyPaneTextField,
+} from '@microsoft/sp-property-pane';
+import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
+
+import SalesFunnelSearch from './components/SalesFunnelSearch';
+import { ISalesFunnelSearchProps } from './components/ISalesFunnelSearchProps';
+
+export interface ISalesFunnelSearchWebPartProps {
+  title: string;
+  placeholder: string;
+}
+
+export default class SalesFunnelSearchWebPart extends BaseClientSideWebPart<ISalesFunnelSearchWebPartProps> {
+
+  public render(): void {
+    const element: React.ReactElement<ISalesFunnelSearchProps> = React.createElement(
+      SalesFunnelSearch,
+      {
+        context: this.context,
+        title: this.properties.title || 'Sales Funnel Search',
+        placeholder: this.properties.placeholder || 'Search by project, owner, city, estimator...',
       }
-    }
-  ]
+    );
+    ReactDom.render(element, this.domElement);
+  }
+
+  protected onDispose(): void {
+    ReactDom.unmountComponentAtNode(this.domElement);
+  }
+
+  protected get dataVersion(): Version {
+    return Version.parse('1.0');
+  }
+
+  protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+    return {
+      pages: [
+        {
+          header: { description: 'Configure Sales Funnel Search' },
+          groups: [
+            {
+              groupName: 'Settings',
+              groupFields: [
+                PropertyPaneTextField('title', {
+                  label: 'Web Part Title',
+                  placeholder: 'Sales Funnel Search',
+                }),
+                PropertyPaneTextField('placeholder', {
+                  label: 'Search Input Placeholder',
+                  placeholder: 'Search by project, owner, city...',
+                }),
+              ],
+            },
+          ],
+        },
+      ],
+    };
+  }
 }
