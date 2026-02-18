@@ -91,15 +91,15 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
   private getStatusColor(status?: string): string {
     if (!status) return styles.statusDefault;
     const s = status.toLowerCase();
-    if (s.includes('won') || s.includes('award')) return styles.statusWon;
-    if (s.includes('lost') || s.includes('no award')) return styles.statusLost;
-    if (s.includes('pending') || s.includes('active') || s.includes('bid')) return styles.statusPending;
-    if (s.includes('cancel')) return styles.statusCancelled;
+    if (s.indexOf('won') !== -1 || s.indexOf('award') !== -1) return styles.statusWon;
+    if (s.indexOf('lost') !== -1 || s.indexOf('no award') !== -1) return styles.statusLost;
+    if (s.indexOf('pending') !== -1 || s.indexOf('active') !== -1 || s.indexOf('bid') !== -1) return styles.statusPending;
+    if (s.indexOf('cancel') !== -1) return styles.statusCancelled;
     return styles.statusDefault;
   }
 
   private getListBadgeColor(listName: string): string {
-    const colors: Record<string, string> = {
+    const colors: { [key: string]: string } = {
       'Aggregate Sales Funnel': styles.badgeAggregate,
       '2026': styles.badge2026,
       '2025': styles.badge2025,
@@ -168,7 +168,7 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
     return (
       <div className={styles.tabsWrapper}>
         <button
-          className={`${styles.tab} ${activeList === 'all' ? styles.tabActive : ''}`}
+          className={styles.tab + (activeList === 'all' ? ' ' + styles.tabActive : '')}
           onClick={() => this.handleListTabClick('all')}
         >
           All Results
@@ -177,7 +177,7 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
         {listsWithResults.map(list => (
           <button
             key={list}
-            className={`${styles.tab} ${activeList === list ? styles.tabActive : ''}`}
+            className={styles.tab + (activeList === list ? ' ' + styles.tabActive : '')}
             onClick={() => this.handleListTabClick(list)}
           >
             {list}
@@ -191,7 +191,7 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
   private renderResultCard(item: ISalesFunnelItem): JSX.Element {
     return (
       
-        key={`${item.sourceList}-${item.Id}`}
+        key={item.sourceList + '-' + item.Id}
         href={item.itemUrl}
         target="_blank"
         rel="noopener noreferrer"
@@ -199,33 +199,94 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
       >
         <div className={styles.cardHeader}>
           <div className={styles.cardTitleRow}>
-            <span className={styles.cardTitle}>{item.Project || item.Title || '(No Title)'}</span>
+            <span className={styles.cardTitle}>
+              {item.Project || item.Title || '(No Title)'}
+            </span>
             {item.Status && (
-              <span className={`${styles.statusBadge} ${this.getStatusColor(item.Status)}`}>
+              <span className={styles.statusBadge + ' ' + this.getStatusColor(item.Status)}>
                 {item.Status}
               </span>
             )}
           </div>
           <div className={styles.cardSubRow}>
-            <span className={`${styles.listBadge} ${this.getListBadgeColor(item.sourceList)}`}>
+            <span className={styles.listBadge + ' ' + this.getListBadgeColor(item.sourceList)}>
               {item.sourceList}
             </span>
-            {item.Bid2WinID && <span className={styles.bid2winId}>ID: {item.Bid2WinID}</span>}
+            {item.Bid2WinID && (
+              <span className={styles.bid2winId}>ID: {item.Bid2WinID}</span>
+            )}
           </div>
         </div>
 
         <div className={styles.cardGrid}>
-          {item.Owner && <div className={styles.cardField}><span className={styles.fieldLabel}>Owner</span><span className={styles.fieldValue}>{item.Owner}</span></div>}
-          {item.Estimator && <div className={styles.cardField}><span className={styles.fieldLabel}>Estimator</span><span className={styles.fieldValue}>{item.Estimator}</span></div>}
-          {item.BusinessArea && <div className={styles.cardField}><span className={styles.fieldLabel}>Business Area</span><span className={styles.fieldValue}>{item.BusinessArea}</span></div>}
-          {item.Segment && <div className={styles.cardField}><span className={styles.fieldLabel}>Segment</span><span className={styles.fieldValue}>{item.Segment}</span></div>}
-          {(item.City || item.State) && <div className={styles.cardField}><span className={styles.fieldLabel}>Location</span><span className={styles.fieldValue}>{[item.City, item.County, item.State].filter(Boolean).join(', ')}</span></div>}
-          {item.BidDate && <div className={styles.cardField}><span className={styles.fieldLabel}>Bid Date</span><span className={styles.fieldValue}>{item.BidDate}</span></div>}
-          {item.AwardDate && <div className={styles.cardField}><span className={styles.fieldLabel}>Award Date</span><span className={styles.fieldValue}>{item.AwardDate}</span></div>}
-          {item.PrimeOrSub && <div className={styles.cardField}><span className={styles.fieldLabel}>Prime/Sub</span><span className={styles.fieldValue}>{item.PrimeOrSub}</span></div>}
-          {item.Plant && <div className={styles.cardField}><span className={styles.fieldLabel}>Plant</span><span className={styles.fieldValue}>{item.Plant}</span></div>}
-          {item.LowBidderName && <div className={styles.cardField}><span className={styles.fieldLabel}>Low Bidder</span><span className={styles.fieldValue}>{item.LowBidderName}</span></div>}
-          {item.PISStatus && <div className={styles.cardField}><span className={styles.fieldLabel}>PIS Status</span><span className={styles.fieldValue}>{item.PISStatus}</span></div>}
+          {item.Owner && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Owner</span>
+              <span className={styles.fieldValue}>{item.Owner}</span>
+            </div>
+          )}
+          {item.Estimator && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Estimator</span>
+              <span className={styles.fieldValue}>{item.Estimator}</span>
+            </div>
+          )}
+          {item.BusinessArea && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Business Area</span>
+              <span className={styles.fieldValue}>{item.BusinessArea}</span>
+            </div>
+          )}
+          {item.Segment && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Segment</span>
+              <span className={styles.fieldValue}>{item.Segment}</span>
+            </div>
+          )}
+          {(item.City || item.State) && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Location</span>
+              <span className={styles.fieldValue}>
+                {[item.City, item.County, item.State].filter(Boolean).join(', ')}
+              </span>
+            </div>
+          )}
+          {item.BidDate && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Bid Date</span>
+              <span className={styles.fieldValue}>{item.BidDate}</span>
+            </div>
+          )}
+          {item.AwardDate && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Award Date</span>
+              <span className={styles.fieldValue}>{item.AwardDate}</span>
+            </div>
+          )}
+          {item.PrimeOrSub && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Prime/Sub</span>
+              <span className={styles.fieldValue}>{item.PrimeOrSub}</span>
+            </div>
+          )}
+          {item.Plant && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Plant</span>
+              <span className={styles.fieldValue}>{item.Plant}</span>
+            </div>
+          )}
+          {item.LowBidderName && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>Low Bidder</span>
+              <span className={styles.fieldValue}>{item.LowBidderName}</span>
+            </div>
+          )}
+          {item.PISStatus && (
+            <div className={styles.cardField}>
+              <span className={styles.fieldLabel}>PIS Status</span>
+              <span className={styles.fieldValue}>{item.PISStatus}</span>
+            </div>
+          )}
         </div>
 
         {item.EstimatedValue && item.EstimatedValue > 0 ? (
@@ -256,14 +317,16 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
         </div>
       );
     }
+
     if (errorMessage) {
       return (
-        <div className={`${styles.stateArea} ${styles.errorState}`}>
+        <div className={styles.stateArea + ' ' + styles.errorState}>
           <div className={styles.stateIcon}>⚠️</div>
           <p>{errorMessage}</p>
         </div>
       );
     }
+
     if (!hasSearched) {
       return (
         <div className={styles.emptyState}>
@@ -273,10 +336,13 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
             </svg>
           </div>
           <p className={styles.emptyTitle}>Search the Sales Funnel</p>
-          <p className={styles.emptySubtitle}>Search across {SALES_FUNNEL_LISTS.length} lists — by project, owner, city, estimator, status and more</p>
+          <p className={styles.emptySubtitle}>
+            Search across {SALES_FUNNEL_LISTS.length} lists — by project name, owner, city, estimator, status and more
+          </p>
         </div>
       );
     }
+
     if (filtered.length === 0) {
       return (
         <div className={styles.emptyState}>
@@ -291,7 +357,7 @@ export default class SalesFunnelSearch extends React.Component<ISalesFunnelSearc
       <div className={styles.resultsList}>
         <p className={styles.resultCount}>
           Showing <strong>{filtered.length}</strong> result{filtered.length !== 1 ? 's' : ''}
-          {this.state.activeList !== 'all' ? ` in ${this.state.activeList}` : ' across all lists'}
+          {this.state.activeList !== 'all' ? ' in ' + this.state.activeList : ' across all lists'}
         </p>
         {filtered.map(item => this.renderResultCard(item))}
       </div>
